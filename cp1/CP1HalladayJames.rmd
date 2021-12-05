@@ -1,0 +1,307 @@
+---
+title: 'Class Prep 1: 1.1.3 to 1.3.1'
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+library(cmna)
+
+# Chapter 1
+
+## Section 1.1.3
+
+```{r}
+count <- 0
+m <- 10
+
+for( i in 1:m)
+  count <- count + 1
+
+count
+
+```
+
+
+```{r}
+count <- 0
+m <- 10
+n <- 7
+
+for(i in 1:m)
+  for(j in 1:n)
+    count <- count + 1
+
+count
+
+```
+
+
+```{r}
+count <- 0
+m <- 10
+
+for( i in 1:m)
+  for(j in 1:i)
+    count <- count + 1
+
+count
+
+```
+
+
+```{r}
+isPrime <- function(n) {
+  if(n == 2)
+    return (TRUE)
+  
+  for(i in 2:sqrt(n))
+    if(n %% i == 0)
+      return(FALSE)
+  
+  return(TRUE)
+}
+
+```
+
+
+```{r}
+count <- 0
+m <- 10
+x <- 1:100
+y <- rep(1, 100)
+
+for( i in 1:m)
+  y <- y * x
+  count <- count + 1
+
+count
+
+```
+
+
+## Section 1.21
+
+
+```{r}
+TRUE == -1; TRUE == 0; TRUE == 1; TRUE == 3.14
+
+```
+
+
+```{r}
+FALSE == -1; FALSE == 0;  FALSE == 1; FALSE == 3.14
+
+```
+
+
+
+```{r}
+TRUE < FALSE; TRUE > FALSE
+
+```
+
+
+
+```{r}
+x <- c(TRUE, FALSE, TRUE, FALSE, TRUE)
+
+sum(x); mean(x); length(x)
+
+```
+
+
+```{r}
+x <- c(1 ,2 ,3, 4, 3, 1, 2, 3, 3, 4, 1, 3, 4, 3)
+
+sum(x == 3)
+```
+
+
+```{r}
+x <- c(1 ,2 ,3, 4, 3, 1, 2, 3, 3, 4, 1, 3, 4, 3)
+
+sum(x == 3)
+sum(x < 3)
+```
+
+
+
+```{r}
+x <- 3.14
+is.numeric(x)
+is.integer(x)
+```
+
+
+```{r}
+is.integer(3)
+```
+
+
+
+```{r}
+is.integer(3)
+```
+
+
+
+```{r}
+x <- 3.14
+as.numeric(x)
+as.integer(x)
+```
+
+
+
+## Section 1.2.2
+
+```{r}
+(x <- c(1, 0, 1, 0))
+```
+
+
+
+
+```{r}
+(y <- c(x, 2, 4, 6))
+```
+
+
+
+
+```{r}
+(z <- c(x, y))
+z[10]
+z[c(10, 9, 1)]
+```
+
+
+
+```{r}
+(z1 <- list(a = 3, b = 4))
+```
+
+
+
+```{r}
+(z2 <- list(s = "test", nine = 9))
+```
+
+
+
+```{r}
+(z <- list(z1, z2))
+```
+
+
+```{r}
+(A <- matrix(1:12, 3, 4))
+
+A[2, 3]
+A[2,  ]
+A[,3]
+
+```
+
+
+
+```{r}
+x1 <- 1:3
+x2 <- 2:6
+cbind(x1, x2)
+
+rbind(x1, x2)
+```
+
+
+
+```{r}
+(A)
+
+t(A)
+```
+
+
+```{r}
+t(x)
+
+t(t(x))
+```
+
+
+
+```{r}
+NA == NA
+NA == 1
+natest <- c(1, 2, NA, 4, 5)
+is.na(natest)
+```
+
+
+
+## Section 1.3.1
+
+
+```{r}
+naivesum <- function(x) {
+  s <- 0
+  n <- length(x)
+  
+  for(i in 1:n)
+    s <- s + x[i]
+  return(s)
+}
+
+
+x <- c(1, 2, 3, 4.5, -6)
+naivesum(x)
+```
+
+
+
+```{r}
+pwisesum <- function(x) {
+  n <- length(x)
+  
+  if(n == 1) 
+    return(x)
+  m = floor(n / 2)
+  return(pwisesum(x[1:m]) + pwisesum(x[(m + 1):n]))
+}
+
+pwisesum(x)
+```
+
+
+
+```{r}
+kahansum <- function(x) {
+  comp <- s <- 0
+  n <- length(x)
+  
+  for(i in 1:n) {
+    y <- x[i] - comp
+    t <- x[i] + s
+    comp <- (t - s) - y
+    s <- t
+  }
+  
+  
+  return(s)
+}
+
+kahansum(x)
+```
+
+
+```{r}
+sum(c(1, 2, 3, 4, NA, 5))
+sum(c(1, 2, 3, 4, NA, 5), na.rm = TRUE)
+```
+

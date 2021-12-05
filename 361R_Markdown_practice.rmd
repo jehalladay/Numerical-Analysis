@@ -1,0 +1,48 @@
+---
+title: "361 Practice Session"
+output:
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Text Options
+
+R Markdown allows us to type in paragraphs of text. WE can also include mathematical notation using $\LaTeX$. Here is an *inline* math formula: $\int_a^b f(x) dx$. Here is a formula in **display** mode
+
+$$ \int_a^b f(x) dx $$
+
+Here is an aligned multi-line display
+
+\begin{aligned}
+\int_0^1 2x dx &= x^2 \left|_0^1 \right. \\
+&= 1^2 - 0^2 \\
+&= 1 \\
+\end{aligned}
+
+
+
+
+
+
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

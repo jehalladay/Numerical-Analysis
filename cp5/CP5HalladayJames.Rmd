@@ -1,0 +1,93 @@
+---
+title: 'Class Prep 4: 2.3.1 to 2.3.2'
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# Chapter 2: Error Analysis
+
+## Section 2.3.3: Overflow and Underflow
+
+```{r}
+library(cmna)
+library(pracma)
+
+
+
+.Machine$double.xmin
+.Machine$double.xmin / 2
+
+.Machine$double.xmax
+
+2147483647L * 2L
+2147483647L
+
+.Machine$double.xmax * 2
+
+```
+
+
+## Section 2.3.4: Error Propogation and Stability
+
+## Section 2.4.1: Simple Division Algorithms
+
+
+```{r}
+naivediv <- function(m, n) {
+  quot <- 0
+  r <- m
+  
+  if(n == 0)
+    stop("attempted division by 0")
+  
+  while(r >= n) {
+    quot <- quot + 1
+    r <- r - n
+  }
+  
+  return(list(quotient = quot, remainder = r))
+}
+
+naivediv(314, 7)
+
+floor(314 / 7)
+314 %% 7
+
+```
+
+
+
+## Section 2.4.2: Binary Long Division
+
+```{r}
+longdiv <- function(m, n) {
+  quot <- 0
+  r <- 0
+  
+  if(n == 0)
+    stop("Attempted division by 0")
+
+  for(i in 31:0) {
+    r <- bitwShiftL(r, 1)
+    r <- r + bitwAnd(bitwShiftR(m, i), 1)
+    if(r >= n) {
+      r <- r - n
+      quot <- quot + bitwShiftL(1, i)
+    }
+  }  
+  
+  return(list(quotient = quot, remainder = r))
+}
+
+
+longdiv(314, 7)
+
+
+```
