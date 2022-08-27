@@ -1,37 +1,44 @@
+
 Section 6.3.1: Multi-Dimensional Gradient Descent
 ========================================================
 author: James Halladay
-date: /11/16/21
+date: 11/16/21
 autosize: true
 
 
+ 
+What is a Gradient?
 ========================================================
+Differentiation can be generalized to multiple dimensions in the form of a gradient.
 
-For more details on authoring R presentations please visit <https://support.rstudio.com/hc/en-us/articles/200486468>.
+Taking the gradient of a function returns a vector containing every partial derivative  of a function.
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+$$
+  \nabla f(x_1, x_2, \ldots, x_n) = \begin{bmatrix}
+  \frac{\partial f}{\partial x_1} \\
+  \frac{\partial f}{\partial x_2} \\
+  \vdots \\
+  \frac{\partial f}{\partial x_n}
+  \end{bmatrix}
+$$
 
-Slide With Code
+
+Gradient Descent
 ========================================================
+Gradient Descent is the process of using the gradient of a differentiable function to find a local minimum of the function from an initial point.
+
+Starting from the initial value, the gradient is evaluated at that value. We then step down the curve of the gradient to find a new value until the value converges to a local minimum of the function, meaning the gradient is approximately equal to 0.
+
+<text> </text>
 
 
-```r
-summary(cars)
+
+
+
+
+
+
 ```
-
+Error in mesh(seq(-2, 2, length.out = 50), seq(-5, 5, length.out = 50)) : 
+  could not find function "mesh"
 ```
-     speed           dist       
- Min.   : 4.0   Min.   :  2.00  
- 1st Qu.:12.0   1st Qu.: 26.00  
- Median :15.0   Median : 36.00  
- Mean   :15.4   Mean   : 42.98  
- 3rd Qu.:19.0   3rd Qu.: 56.00  
- Max.   :25.0   Max.   :120.00  
-```
-
-Slide With Plot
-========================================================
-
-![plot of chunk unnamed-chunk-2](PresentationHalladayJames.rpres-figure/unnamed-chunk-2-1.png)

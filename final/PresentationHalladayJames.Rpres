@@ -1,28 +1,152 @@
+
 Section 6.3.1: Multi-Dimensional Gradient Descent
 ========================================================
 author: James Halladay
-date: /11/16/21
+date: 11/16/21
 autosize: true
 
 
+ 
+What is a Gradient?
 ========================================================
+Differentiation can be generalized to multiple dimensions in the form of a gradient.
 
-For more details on authoring R presentations please visit <https://support.rstudio.com/hc/en-us/articles/200486468>.
+Taking the gradient of a function returns a vector containing every partial derivative  of a function.
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+$$
+  \nabla f(x_1, x_2, \ldots, x_n) = \begin{bmatrix}
+  \frac{\partial f}{\partial x_1} \\
+  \frac{\partial f}{\partial x_2} \\
+  \vdots \\
+  \frac{\partial f}{\partial x_n}
+  \end{bmatrix}
+$$
 
-Slide With Code
+
+Gradient Descent
+========================================================
+Gradient Descent is the process of using the gradient of a differentiable function to find a local minimum of the function from an initial point.
+
+Starting from the initial value, the gradient is evaluated at that value. We then step down the curve of the gradient to find a new value until the value converges to a local minimum of the function, meaning the gradient is approximately equal to 0.
+
+<text> </text>
+
+```{r, echo=FALSE, fig.width=4, fig.height=4}
+
+library(cmna)
+library(pracma)
+
+R <- 3; r <- 2
+M <- mesh(seq(-2, 2,length.out=50), seq(-5, 5,length.out=50))
+
+
+x <- seq(-5, 5,length.out=50)
+y <- x^2
+z <-  x^2 + y^2
+
+plot(x,y, type="l")
+
+```
+
+Algorithm in R
 ========================================================
 
 ```{r}
-summary(cars)
+gd <- function(fp, x, h = 1e2, tol = 1e-4, m = 1e3) {
+  iter <- 0
+  
+  oldx <- x
+  x = x - h*fp(x)
+  
+  while(vecnorm(x - oldx) > tol) {
+    iter <- iter + 1
+    if(iter > m)
+      return(x)
+    oldx <- x
+    x = x - h*fp(x)
+  }
+
+  return(x)  
+}
+
+
+
 ```
 
-Slide With Plot
+
+
+
 ========================================================
 
-```{r, echo=FALSE}
-plot(cars)
+In the book, we consider the function 
+
+$$
+  f( x_1, x_2 ) = (x_1 - 1)^2 + (2x_2 - 2)^2
+$$
+
+which has a global minimum at $(1,1)$.
+
+Since R cannot find the derivatives of the function on its own, we provide the algorithm with the gradient ourselves.
+
+$$
+  \frac{\partial f}{\partial x_1} = 2x_1 - 2
+$$
+
+and
+
+$$
+  \frac{\partial f}{\partial x_2} = 8x_2 - 8
+$$
+
+========================================================
+Thus, in R we define our gradient as the function
+
+```{r}
+fp <- function(x) {
+  x1 = 2*x[1] - 2
+  x2 = 8*x[2] - 8
+  
+  return(c(x1, x2))
+}
+
+x = c(0,0)
+
+newx = gd(fp, x, h=.1, m = 100)
+newx
 ```
+
+Here we see executing gradient descent on the gradient given by our function gives us values that are approximately equal to our global minimum (1,1)
+
+
+Applications
+========================================================
+
+Multi-dimensional gradient descent is the primary technique used to optimize mathematical models with complex or unknowable parameters.
+
+One of the simplest examples is Least Squares Regression where a trend line is found for a scatter plot.
+
+
+![least squares linear regression](./regression.png)
+
+
+
+========================================================
+
+Gradient Descent is used in some form as the primary technique to train a large variety of successful machine learning models such as Neural Networks, Support Vector Machines, Transformers, etc.
+
+
+
+This is possible by using gradient descent on an error function such as the ones reviewed in our class, typically refered to in literature as a loss function.
+
+![Simple Neural Network](./NN.png)
+
+References
+========================================================
+
+HOWARD, I. I. (2020). Computational methods for numerical analysis with R. CRC PRESS. 
+
+pictures:
+
+Linear regression using neural network: Neural Network for regression. Analytics Vidhya. (2021, June 29). Retrieved December 7, 2021, from https://www.analyticsvidhya.com/blog/2021/06/linear-regression-using-neural-networks/. 
+
+Taylor, C. (2019, January 17). What is the least squares line? ThoughtCo. Retrieved December 7, 2021, from https://www.thoughtco.com/what-is-a-least-squares-line-3126250. 
